@@ -1,0 +1,201 @@
+.screen {
+  width: 700px;
+  height: 360px;
+  background-color: #eeeeee;
+  padding: 24px 9px;
+  box-sizing: border-box;
+}
+.yellowArea {
+  width: 682px;
+  height: 312px;
+  background-color: #D5D5D5;
+  padding: 15px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.topArea {
+  display: flex;
+  gap: 10px;
+}
+.messageBox {
+  background-color: #F7AA05;
+  width: 500px;
+  height: 220px;
+border: none;
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.sideMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sideMenu button {
+  width: 120px;
+  height: 65px;
+  background-color: #F7AA05;
+  border: none;
+  border-radius: 10px;
+}
+.bottomMenu {
+  position: relative;
+  width: 100%;
+  height: 60px;
+}
+.bottomMenu button {
+  position: absolute;
+  right: 30px;
+  bottom: 12px;
+  width: 200px;
+  height: 60px;
+  border: none;
+  border-radius: 10px;
+  background-color: #F7AA05;
+}
+.bottomMenu button:nth-child(1) {
+  width: 203px;
+}
+.bottomMenu button:nth-child(2) {
+  width: 203px;
+}
+.bottomMenu button:nth-child(3) {
+  width: 204px;
+}
+.speech {
+  background-color: #FBFFC9;
+  border-radius: 10px;
+  padding: 8px;
+  margin-top: 10px;
+  font-size: 14px;
+}
+.messageText {
+  background-color: #FBFFC9;
+  border-radius: 15px;
+  padding: 10px 15px;
+  margin-top: 15px;
+  width: fit-content;
+  max-width: 90%;
+  font-size: 14px;
+}
+.teacherPage {
+  width: 360px;
+  height: 700px;
+  background-color: white;
+  margin: auto;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.teacherPage textarea {
+  height: 300px;
+  resize: none;
+  padding: 15px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+.teacherPage button {
+  height: 50px;
+  border: none;
+  border-radius: 10px;
+  background-color: #ffb000;
+  font-size: 16px;
+  font-weight: bold;
+}
+.statusBox {
+  width: 120px;
+  height: 65px;
+  background-color: #F7AA05;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+}
+.statusBox p {
+  margin: 3px 0 0;
+  font-size: 12px;
+}
+.teacherPage {
+  width: 360px;
+  height: 700px;
+  background-color: white;
+  margin: auto;
+  padding: 25px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.teacherPage h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.teacherPage h3 {
+  margin: 5px 0;
+}
+.teacherPage textarea {
+  width: 100%;
+  height: 150px;
+  resize: none;
+  padding: 15px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+.teacherPage select {
+  width: 100%;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 5px;
+  font-size: 14px;
+}
+.teacherPage button {
+  width: 100%;
+  height: 45px;
+  border: none;
+  border-radius: 10px;
+  background-color: #ffb000;
+  font-weight: bold;
+  cursor: pointer;
+}
+.infoArea {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  height: 70px;
+}
+.infoBox {
+  background-color: #F7AA05;
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+/* 날씨 박스 */
+.infoBox:nth-child(1) {
+  width: 200px;
+  height: 60px;
+}
+/* 급식 박스 */
+.infoBox:nth-child(2) {
+  width: 200px;
+  height: 60px;
+}
+.infoBox h3 {
+  margin: 0;
+  font-size: 14px;
+}
+.infoBox p {
+  margin: 2px 0;
+  font-size: 12px;
+}
