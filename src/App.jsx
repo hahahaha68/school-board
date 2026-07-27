@@ -29,6 +29,33 @@ async function loadStatus(){
     console.log(error)
   }
   else{
+console.log(data)
+
+
+    setStatus({
+      sports:data.sports,
+      library:data.library,
+      gym:data.gym
+    })
+
+  }
+
+}
+async function loadStatus(){
+
+  const {data,error} = await supabase
+    .from("status")
+    .select("*")
+    .eq("id",1)
+    .single()
+
+
+  if(error){
+    console.log(error)
+  }
+  else{
+
+    console.log(data)
 
     setStatus({
       sports:data.sports,
@@ -40,6 +67,39 @@ async function loadStatus(){
 
 }
 
+
+async function loadStatus(){
+
+  const {data,error} = await supabase
+    .from("status")
+    .select("*")
+    .eq("id",1)
+    .single()
+
+
+  if(error){
+    console.log(error)
+  }
+  else{
+
+    console.log(data)
+
+    setStatus({
+      sports:data.sports,
+      library:data.library,
+      gym:data.gym
+    })
+
+  }
+
+}
+
+
+useEffect(()=>{
+
+  loadStatus()
+
+},[])
 
   const [weather,setWeather] = useState({
   condition:"",
