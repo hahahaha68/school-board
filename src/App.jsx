@@ -41,58 +41,7 @@ console.log(data)
   }
 
 }
-async function loadStatus(){
 
-  const {data,error} = await supabase
-    .from("status")
-    .select("*")
-    .eq("id",1)
-    .single()
-
-
-  if(error){
-    console.log(error)
-  }
-  else{
-
-    console.log(data)
-
-    setStatus({
-      sports:data.sports,
-      library:data.library,
-      gym:data.gym
-    })
-
-  }
-
-}
-
-
-async function loadStatus(){
-
-  const {data,error} = await supabase
-    .from("status")
-    .select("*")
-    .eq("id",1)
-    .single()
-
-
-  if(error){
-    console.log(error)
-  }
-  else{
-
-    console.log(data)
-
-    setStatus({
-      sports:data.sports,
-      library:data.library,
-      gym:data.gym
-    })
-
-  }
-
-}
 
 
 useEffect(()=>{
@@ -198,65 +147,83 @@ async function loadMeal(){
 
 
  
-  const [messages,setMessages] = useState([])
+const [messages,setMessages] = useState([])
 
 
-  useEffect(()=>{
+async function loadMessages(){
 
-    loadMessages()
-
-  },[])
-
-
-
-  async function loadMessages(){
-
-    const {data,error} = await supabase
-      .from("messages")
-      .select("*")
-      .order("created_at",{ascending:false})
+  const {data,error} = await supabase
+    .from("messages")
+    .select("*")
+    .order("created_at",{ascending:false})
 
 
-    if(error){
-      console.log(error)
-    }
-    else{
-      setMessages(data)
-    }
+  if(error){
+
+    console.log(error)
+
+  }
+  else{
+
+    const now = new Date()
+
+    const filtered = data.filter((msg)=>{
+
+      const created = new Date(msg.created_at)
+
+      const diff = now - created
+
+      return diff < 24 * 60 * 60 * 1000
+
+    })
+
+
+    setMessages(filtered)
+
+  }
+
+}
+
+
+useEffect(()=>{
+
+  loadMessages()
+
+},[])
+
+
+
+useEffect(()=>{
+
+  const channel = supabase
+    .channel("messages")
+    .on(
+      "postgres_changes",
+      {
+        event:"INSERT",
+        schema:"public",
+        table:"messages"
+      },
+      (payload)=>{
+
+        setMessages(prev=>[
+          payload.new,
+          ...prev
+        ])
+
+      }
+    )
+    .subscribe()
+
+
+  return ()=>{
+
+    supabase.removeChannel(channel)
 
   }
 
 
-
-  useEffect(()=>{
-
-    const channel = supabase
-      .channel("messages")
-      .on(
-        "postgres_changes",
-        {
-          event:"INSERT",
-          schema:"public",
-          table:"messages"
-        },
-        (payload)=>{
-
-          setMessages(prev=>[
-            ...prev,
-            payload.new
-          ])
-
-        }
-      )
-      .subscribe()
-
-
-    return ()=>{
-      supabase.removeChannel(channel)
-    }
-
-
-  },[])
+},[])
 useEffect(()=>{
 
   const channel = supabase
@@ -297,7 +264,7 @@ useEffect(()=>{
 {
 teacherMode ?
 
-<Teacher />
+<Teacher setTeacherMode={setTeacherMode} />
 
 :
 

@@ -2,24 +2,46 @@ import { useState, useEffect } from "react"
 import { supabase } from "./supabase"
 
 
-function Teacher(){
+function Teacher({setTeacherMode}){
 
   const [input,setInput] = useState("")
+  const [messages,setMessages] = useState([])
 
 
-  const [status,setStatus] = useState({
-    sports:"",
-    library:"",
-    gym:""
-  })
+  async function loadMessages(){
+
+    const {data,error} = await supabase
+      .from("messages")
+      .select("*")
+      .order("created_at",{ascending:false})
 
 
-  useEffect(()=>{
+    if(error){
+      console.log(error)
+    }
+    else{
+      setMessages(data)
+    }
 
-    loadStatus()
+  }
 
-  },[])
 
+  async function deleteMessage(id){
+
+    const {error} = await supabase
+      .from("messages")
+      .delete()
+      .eq("id", id)
+
+
+    if(error){
+      console.log(error)
+    }
+    else{
+      loadMessages()
+    }
+
+  }
 
 
   async function loadStatus(){
@@ -94,7 +116,11 @@ alert(JSON.stringify(result))
 }
 
 
+useEffect(()=>{
 
+  loadMessages()
+
+},[])
   return(
 
     <div className="teacherPage">
@@ -121,8 +147,28 @@ alert(JSON.stringify(result))
       <button onClick={sendMessage}>
         메시지 보내기
       </button>
+<h3>최근 메시지</h3>
 
+{
+  messages.map((msg)=>(
+    <div key={msg.id}>
 
+      {msg.text}
+
+      <button
+        onClick={()=>deleteMessage(msg.id)}
+      >
+        🗑
+      </button>
+
+    </div>
+  ))
+}
+<button
+  onClick={()=>setTeacherMode(false)}
+>
+  전자칠판으로 돌아가기
+</button>
 
 
       <h3>시설 상태 변경</h3>
