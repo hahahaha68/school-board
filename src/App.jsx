@@ -193,7 +193,17 @@ async function loadAssignments(){
     console.log(error)
   }
   else{
-    setAssignments(data)
+    const today = new Date()
+today.setHours(0, 0, 0, 0)
+
+const filtered = data.filter((assignment) => {
+  const date = new Date(assignment.date)
+  date.setHours(0, 0, 0, 0)
+
+  return date >= today
+})
+
+setAssignments(filtered)
   }
 }
 
@@ -454,7 +464,7 @@ teacherMode ?
           </div>
 
 
-        </div>
+       
 
 
 
@@ -482,7 +492,7 @@ teacherMode ?
   )}
 
 
-
+ </div>
 
 
           <div className="infoBox mealBox">
