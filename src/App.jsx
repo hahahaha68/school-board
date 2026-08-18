@@ -472,27 +472,23 @@ teacherMode ?
        
 
 
-         <div className="infoBox assignmentBox">
-
+        <div className="infoBox assignmentBox">
   <h3>수행평가 공지</h3>
 
-  {assignments.length > 0 ? (
-
-    assignments.map((assignment) => (
-
-      <div className="assignmentItem" key={assignment.id}>
-  <b>{assignment.subject}: {assignment.title} {getDDay(assignment.date)}</b>
+  <div className="assignmentContent">
+    {assignments.length > 0 ? (
+      assignments.map((assignment) => (
+        <div className="assignmentItem" key={assignment.id}>
+          <b>
+            {assignment.subject}: {assignment.title} {getDDay(assignment.date)}
+          </b>
+        </div>
+      ))
+    ) : (
+      <p>예정된 수행평가가 없습니다.</p>
+    )}
+  </div>
 </div>
-    ))
-
-  ) : (
-
-    <p>예정된 수행평가가 없습니다.</p>
-
-  )}
-
-
- </div>
 
 
           <div className="infoBox mealBox">
