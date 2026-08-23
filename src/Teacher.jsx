@@ -45,20 +45,28 @@ function Teacher({
   }
   async function loadMessages(){
 
-    const {data,error} = await supabase
-      .from("messages")
-      .select("*")
-      .order("created_at",{ascending:false})
+  const {data,error} = await supabase
+    .from("messages")
+    .select("*")
+    .order("created_at",{ascending:false})
 
-
-    if(error){
-      console.log(error)
-    }
-    else{
-      setMessages(data)
-    }
-
+  if(error){
+    console.log(error)
   }
+  else{
+
+    const now = new Date()
+
+    const filtered = data.filter((msg) => {
+      const created = new Date(msg.created_at)
+      const diff = now - created
+
+      return diff < 24 * 60 * 60 * 1000
+    })
+
+    setMessages(filtered)
+  }
+}
 
 async function saveAssignment(){
 
@@ -161,7 +169,26 @@ async function saveAssignment(){
   }
 
 
+useEffect(() => {
+  const channel = supabase
+    .channel("teacher-messages")
+    .on(
+      "postgres_changes",
+      {
+        event: "*",
+        schema: "public",
+        table: "messages"
+      },
+      () => {
+        loadMessages()
+      }
+    )
+    .subscribe()
 
+  return () => {
+    supabase.removeChannel(channel)
+  }
+}, [])
 
  async function saveStatus(){
 
@@ -185,6 +212,13 @@ useEffect(()=>{
 
   loadMessages()
   loadStatus()
+
+  const interval = setInterval(() => {
+    loadMessages()
+    loadStatus()
+  }, 60 * 1000)
+
+  return () => clearInterval(interval)
 
 },[])
   return(
