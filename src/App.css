@@ -1,689 +1,1111 @@
-.screen {
-  width: 100vw;
-  height: 100vh;
+:root {
+  color: #171717;
+  background: #f3f3f1;
+  font-family:
+    Pretendard, "Noto Sans KR", Arial, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
 }
-/*배경*/
-.yellowArea {
- width: 100vw;
-  height: 100vh;
-  background-color: #FFF9E6;
-  padding: 15px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
 
-  
+* {
+  box-sizing: border-box;
 }
-.topArea {
-  display: flex;
-  gap: 10px;
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
 }
-/*로고 위치*/
+
+button {
+  color: inherit;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.screen {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: #fff8e4;
+}
+
+/* 전자칠판 상단 */
+
 .header {
   width: 100%;
-  height: 80px;
-  background-color: #F7AA05;
+  min-height: 88px;
+  padding: 12px clamp(16px, 3vw, 38px);
   display: flex;
   align-items: center;
-  padding: 10px 25px;
-  box-sizing: border-box;
+  gap: 18px;
+  background: #f3a800;
+  box-shadow: 0 3px 16px rgba(81, 54, 0, 0.14);
 }
 
 .logoBox {
-  width: 58px;
-  height: 58px;
-  background-color: white;
+  width: 64px;
+  height: 64px;
+  flex: 0 0 64px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 13px;
+  overflow: hidden;
+  border-radius: 17px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(80, 50, 0, 0.14);
 }
+
 .logoBox img {
-  width: 150%;
-  height: 150%;
+  width: 115%;
+  height: 115%;
   object-fit: contain;
 }
+
 .schoolName {
-  margin-left: 20px;
- 
- font-size: 37px;
- 
+  min-width: 0;
 }
+
 .schoolKorean {
-  font-weight: bold;
+  font-size: clamp(24px, 3vw, 39px);
+  font-weight: 900;
+  letter-spacing: -0.05em;
 }
+
 .schoolEnglishName {
+  margin-top: 2px;
+  overflow: hidden;
+  font-size: clamp(10px, 1vw, 13px);
   font-style: italic;
-  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .settingButton {
+  width: 116px;
+  height: 44px;
   margin-left: auto;
-
-  width: 120px;
-  height: 40px;
-
-  border: none;
-  border-radius: 10px;
-
-  background-color: #FBFFC9;
-
-  font-size: 14px;
-  font-weight: bold;
-
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 12px;
+  background: #fffbd2;
+  font-weight: 800;
   cursor: pointer;
-}
-.messageBox {
-  background-color: #D8D8D8;
-  width: 1000px;
-  height: 370px;
-  border: none; 
-  border-radius: 10px;
-  padding: 20px;
-  box-sizing: border-box;
-   position: relative;
-   padding-top:0px;
-   overflow-y: auto !important;
-overflow-x: hidden;
-.messageBox {
-  overflow-y: auto;
-
-  scrollbar-width: none;
-}}
-
-.messageBox::-webkit-scrollbar {
-  display: none;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
-.messageBox h2 {
-  transform: translateY(-5px);
-}
-.teacherButton {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  width: 120px;
-  height: 40px;
-  border: none;
-  border-radius: 10px;
-  background-color: #FBFFC9;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-}
-.passwordOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-
-  width: 100vw;
-  height: 100vh;
-
-  background-color: rgba(0, 0, 0, 0.5);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  z-index: 1000;
+.settingButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 16px rgba(80, 50, 0, 0.16);
 }
 
-.passwordBox {
-  width: 500px;
-  min-height: 300px;
+/* 전자칠판 본문 */
 
-  background-color: white;
-  border-radius: 20px;
-
-  padding: 40px;
-  box-sizing: border-box;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  gap: 20px;
-}
-
-.passwordBox h2 {
-  margin: 0;
-  font-size: 28px;
-}
-
-.passwordBox p {
-  margin: 0;
-  font-size: 18px;
-}
-
-.passwordBox input {
-  width: 350px;
-  height: 55px;
-
-  box-sizing: border-box;
-
-  border: 2px solid #ddd;
-  border-radius: 10px;
-
-  padding: 10px;
-  font-size: 24px;
-  text-align: center;
-}
-
-.passwordBox button {
-  width: 350px;
-  height: 55px;
-
-  border: none;
-  border-radius: 10px;
-
-  background-color: #F7AA05;
-
-  font-size: 18px;
-  font-weight: bold;
-
-  cursor: pointer;
-}
-.sideMenu {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.sideMenu button {
-  width: 300px;
-  height: 300px;
-  background-color: #F7AA05;
-  border: none;
-  border-radius: 10px;
-}
-.bottomMenu {
-  position: relative;
+.boardArea {
   width: 100%;
-  height: 60px;
-}
-.bottomMenu button {
-  position: absolute;
-  right: 30px;
-  bottom: 12px;
-  width: 200px;
-  height: 60px;
-  border: none;
-  border-radius: 10px;
-  background-color: #F7AA05;
-}
-.bottomMenu button:nth-child(1) {
-  width: 300px;
-}
-.bottomMenu button:nth-child(2) {
-  width: 300px;
-}
-.bottomMenu button:nth-child(3) {
-  width: 300px;
-}
-.speech {
-  background-color: #FBFFC9;
-  border-radius: 10px;
-  padding: 8px;
-  margin-top: -10px;
-  font-size: 14px;
-}
-.messageText {
-  background-color: #FBFFC9;
-  border-radius: 15px;
-  padding: 10px 15px;
-  margin-top: 15px;
-  width: fit-content;
-  max-width: 90%;
-  font-size: 14px;
-}
-.teacherPage {
-  width: 360px;
-  height: 700px;
-  background-color: white;
-  margin: auto;
-  padding: 20px;
-  box-sizing: border-box;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-.teacherPage textarea {
-  height: 300px;
-  resize: none;
-  overflow: hidden;
-  padding: 15px;
-  font-size: 16px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
+  min-height: calc(100vh - 88px);
+  padding: clamp(12px, 1.7vw, 24px);
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr)
+    minmax(240px, 0.55fr);
+  grid-template-rows: minmax(330px, 1fr) minmax(150px, auto);
+  gap: clamp(10px, 1.2vw, 18px);
+  background: #fff8e4;
 }
 
-/*날씨,체육관,도서관*/
-.statusBox {
-  width: 250px;
-  height: 245px;
-  background-color: #F7AA05;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 14px;
+.boardCard {
+  overflow: hidden;
+  border: 1px solid rgba(35, 35, 35, 0.07);
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(86, 64, 19, 0.09);
 }
-.statusBox p {
-  margin: 3px 0 0;
+
+.boardLoading {
+  grid-column: 1 / -1;
+  display: grid;
+  min-height: 55vh;
+  place-items: center;
   font-size: 20px;
-   font-weight: bold;
-}
-.teacherPage {
-  width: 360px;
-  height: 700px;
-  background-color: white;
-  margin: auto;
-  padding: 25px;
-  box-sizing: border-box;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-.teacherPage h2 {
-  text-align: center;
-  margin-bottom: 10px;
-}
-.teacherPage h3 {
-  margin: 5px 0;
-}
-.teacherPage textarea {
-  width: 100%;
-  height: 150px;
-  resize: none;
-  padding: 15px;
-  box-sizing: border-box;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-size: 15px;
-}
-.teacherPage select {
-  width: 100%;
-  height: 40px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  padding: 5px;
-  font-size: 14px;
-}
-.teacherPage button {
-  width: 100%;
-  height: 45px;
-  border: none;
-  border-radius: 10px;
-  background-color: #ffb000;
-  font-weight: bold;
-  cursor: pointer;
-}
-.infoArea {
-  display: flex;
-  gap: 10px;
-  width: 100%;
-  height: 100px;
-  margin-top: -90px;
+  font-weight: 800;
 }
 
-.infoBox {
-  background-color: #F7AA05;
-  border-radius: 10px;
-  padding: 10px;
-  box-sizing: border-box;
+.messageBox {
+  grid-column: 1 / 3;
+  min-width: 0;
+  padding: clamp(18px, 2vw, 28px);
+  background: #dedede;
 }
 
-/* 급식 박스 */
-.infoBox.mealBox {
-  width: 490px;
-  height: 125px;
-  gap: 10px;
-  position: absolute;
-  left: 510px;
-  top: 470px;
-}
-
-.infoBox.mealBox::after {
-  content: "";
-  display: block;
-
-  width: 470px;
-  height: 80px;
-
-  margin-top: -100px;
-
-  background-color: #FFF9E6;
-  border-radius: 8px;
-}
-
-.infoBox.assignmentBox {
-  width: 490px;
-  height: 125px;
-  position: absolute;
-  left: 10px;
-  top: 470px;
-
-  background-color: #F7AA05;
-  border-radius: 10px;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-.assignmentBox h3 {
+.messageBox h2,
+.infoBox h3,
+.statusBox h3 {
   margin: 0;
-  font-size: 14px;
+  letter-spacing: -0.04em;
 }
 
-.assignmentContent {
-  width: 470px;
-  height: 80px;
-
-  margin-top: 5px;
-
-  background-color: #FFF9E6;
-  border-radius: 8px;
-
+.messageList {
+  height: calc(100% - 45px);
+  margin-top: 14px;
   overflow-y: auto;
-  overflow-x: hidden;
-
   scrollbar-width: none;
 }
 
-.assignmentContent::-webkit-scrollbar {
+.messageList::-webkit-scrollbar {
   display: none;
 }
 
-.mealList {
+.messageText {
+  width: fit-content;
+  max-width: 92%;
+  margin: 0 0 12px;
+  padding: 13px 17px;
+  border-radius: 16px;
+  background: #fffbd0;
+  box-shadow: 0 3px 10px rgba(70, 57, 15, 0.06);
+  font-size: clamp(14px, 1.25vw, 19px);
+  line-height: 1.45;
+}
+
+.messageText b {
+  color: #8c5a00;
+  font-size: 0.86em;
+}
+
+.messageText p {
+  margin: 3px 0 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.sideMenu {
+  grid-column: 3;
+  grid-row: 1 / 3;
+  min-width: 0;
+  display: grid;
+  grid-template-rows: minmax(180px, 1fr) minmax(180px, 1fr);
+  gap: clamp(10px, 1.2vw, 18px);
+}
+
+.statusBox {
+  min-height: 0;
+  padding: 20px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 5px 20px;
-}
-
-.mealBox h3 {
-  transform: translateY(-25px);
-}
-
-.mealList p {
-  margin: 30px 0 2px;
-  font-size: 18px !important;
-  font-weight: bold;
-  transform: translateY(-50px);
-}
-
-.assignmentBox h3 {
-  display: flex;
-  margin: 0;
-  font-size: 14px;
-}
-
-.assignmentBox p {
-  margin: 2px 0;
-  font-size: 14px;
-}
-.teacherButton {
-  position: absolute;
-  top: 500px;
-  right: 180px;
-
-  width: 120px;
-  height: 40px;
-
-  border: none;
-  border-radius: 10px;
-
-  background-color: #FBFFC9;
-
-  font-size: 14px;
-  font-weight: bold;
-
-  cursor: pointer;
-}
-.teacherMessage {
-  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
+  justify-content: center;
+  background: #f3a800;
+  text-align: center;
 }
 
-.teacherMessage span {
-  flex: 1;
+.statusBox h3 {
+  font-size: clamp(18px, 1.7vw, 25px);
 }
 
-.deleteButton {
-  width: 30px !important;
-  height: 30px !important;
-  padding: 0;
-  border-radius: 6px !important;
-  font-size: 14px;
-  flex-shrink: 0;
-}
-.teacherMessage {
-  width: 100%;
-  margin-bottom: 10px;
+.weatherRow {
+  margin: 15px 0 8px;
 }
 
-.teacherBubble {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  background-color: #FBFFC9;
-  border-radius: 15px;
-
-  width: 300px;
-  height: 50px;
-
-  padding: 10px 12px;
-  box-sizing: border-box;
+.weatherRow p {
+  margin: 0 0 5px;
+  font-size: clamp(19px, 2vw, 30px);
+  font-weight: 900;
 }
 
-.teacherBubble span {
-  font-size: 14px;
-  flex: 1;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.weatherRow strong {
+  font-size: clamp(24px, 2.5vw, 38px);
 }
 
-.teacherBubble .deleteButton {
-  width: 30px !important;
-  height: 30px !important;
-
-  min-width: 30px;
-
-  padding: 0;
-
-  border: none;
-  border-radius: 6px !important;
-
-  background-color: #F7AA05;
-
-  font-size: 14px;
-}
-.teacherMessageList {
-  width: 100%;
-  height: 60px;
-  overflow-y: auto !important;
-  overflow-x: hidden;
-  flex-shrink: 0;
+.statusBox small {
+  font-weight: 700;
 }
 
-.teacherMessage {
-  margin-bottom: 8px;
-}
-
-.teacherBubble {
-  width: 300px;
-  height: 50px;
-
-  display: flex;
-  align-items: center;
-
-  background-color: #FBFFC9;
-  border-radius: 15px;
-
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-.teacherBubble span {
-  flex: 1;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.deleteMessageButton {
-  width: 30px !important;
-  height: 30px !important;
-  min-width: 30px !important;
-
-  padding: 0 !important;
-
-  background-color: #F7AA05 !important;
-  border-radius: 6px !important;
-
-  font-size: 14px !important;
-}
 .facilityBox {
-  width: 250px;
-  height: 245px;
-  border-radius: 10px;
-  overflow: hidden;
+  min-height: 0;
   position: relative;
-  background: #D5D5D5;
+  overflow: hidden;
+  background: #d4d4d4;
 }
 
 .libraryPart,
 .gymPart {
   position: absolute;
   inset: 0;
-  padding: 15px;
-  box-sizing: border-box;
+  padding: 20px;
+  transition: background 0.25s ease;
 }
 
-/* 왼쪽 위 영역 */
 .libraryPart {
   clip-path: polygon(0 0, 100% 0, 0 100%);
 }
 
-/* 오른쪽 아래 영역 */
 .gymPart {
   clip-path: polygon(100% 0, 100% 100%, 0 100%);
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   align-items: flex-end;
-   
-}
-.gymTitle {
-  transform: translateX(11px);
+  justify-content: flex-end;
+  text-align: right;
 }
 
-/* 이용 가능 */
 .libraryPart.available,
 .gymPart.available {
-  background-color: #F7AA05;
+  background: #f3a800;
 }
 
-/* 이용 불가 */
 .libraryPart.unavailable,
 .gymPart.unavailable {
-  background-color: #D5D5D5;
+  background: #d4d4d4;
 }
-.settingOverlay {
+
+.libraryPart b,
+.gymPart b {
+  font-size: clamp(17px, 1.5vw, 23px);
+}
+
+.libraryPart p,
+.gymPart p {
+  margin: 5px 0 0;
+  font-size: clamp(13px, 1.1vw, 17px);
+  font-weight: 800;
+}
+
+.infoBox {
+  min-width: 0;
+  padding: 15px 18px;
+  background: #f3a800;
+}
+
+.infoBox h3 {
+  margin-bottom: 10px;
+  font-size: clamp(16px, 1.45vw, 22px);
+}
+
+.assignmentBox {
+  grid-column: 1;
+}
+
+.mealBox {
+  grid-column: 2;
+}
+
+.assignmentContent,
+.mealList {
+  height: calc(100% - 35px);
+  min-height: 92px;
+  padding: 12px;
+  overflow-y: auto;
+  border-radius: 12px;
+  background: #fff9e6;
+  scrollbar-width: none;
+}
+
+.assignmentContent::-webkit-scrollbar,
+.mealList::-webkit-scrollbar {
+  display: none;
+}
+
+.assignmentItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(70, 55, 10, 0.09);
+}
+
+.assignmentItem:last-child {
+  border-bottom: 0;
+}
+
+.assignmentItem b {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.assignmentItem strong {
+  flex: 0 0 auto;
+  color: #b96800;
+}
+
+.mealList {
+  display: flex;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  gap: 9px 18px;
+}
+
+.mealList span {
+  font-size: clamp(14px, 1.25vw, 19px);
+  font-weight: 750;
+}
+
+.emptyText {
+  margin: 8px 0;
+  color: #777;
+  font-weight: 650;
+}
+
+/* 모달 */
+
+.modalOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
   z-index: 1000;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  background: rgba(15, 15, 15, 0.58);
+  backdrop-filter: blur(4px);
+}
+
+.modalBox {
+  width: min(100%, 420px);
+  padding: 30px;
+  border-radius: 23px;
+  background: #fff;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.25);
+}
+
+.modalBox h2 {
+  margin: 0 0 10px;
+  letter-spacing: -0.04em;
 }
 
 .settingBox {
-  width: 350px;
-  padding: 30px;
-
-  background: white;
-  border-radius: 20px;
-
   text-align: center;
-  box-sizing: border-box;
 }
 
-.settingBox h2 {
-  margin-top: 0;
+.settingBox p {
+  color: #666;
 }
 
 .settingBox select {
   width: 100%;
-  padding: 12px;
-  margin: 15px 0;
-
-  border-radius: 10px;
-  border: 1px solid #ccc;
-
-  font-size: 16px;
+  height: 50px;
+  margin: 10px 0 18px;
+  padding: 0 14px;
+  border: 1px solid #d3d3d3;
+  border-radius: 12px;
+  background: #fff;
 }
 
-.settingBox button {
-  padding: 10px 25px;
-  border: none;
-  border-radius: 10px;
+.primaryButton,
+.secondaryButton {
+  width: 100%;
+  min-height: 49px;
+  margin-top: 10px;
+  border: 0;
+  border-radius: 12px;
+  font-weight: 850;
   cursor: pointer;
 }
-.assignmentItem {
-  padding: 7px 10px;
-  margin-bottom: 6px;
 
-  border-radius: 8px;
-  
-
-  box-sizing: border-box;
+.primaryButton {
+  background: #f3a800;
 }
 
-.assignmentItem b {
-  display: block;
-  font-size: 13px;
-  margin-bottom: 2px;
+.secondaryButton {
+  background: #ededed;
 }
 
-.assignmentItem p {
-  margin: 0;
+.authBox {
+  max-height: calc(100vh - 30px);
+  overflow-y: auto;
+}
+
+.authTabs {
+  margin-bottom: 22px;
+  padding: 4px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 12px;
+  background: #eeeeee;
+}
+
+.authTabs button {
+  min-height: 42px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.authTabs button.active {
+  background: #fff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.authForm {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.authForm label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
   font-size: 14px;
-  line-height: 1.2;
+  font-weight: 800;
 }
 
-.assignmentItem strong {
-  display: block;
-  margin-top: 3px;
-  font-size: 13px;
+.authForm input {
+  width: 100%;
+  height: 48px;
+  padding: 0 13px;
+  border: 1px solid #d3d3d3;
+  border-radius: 11px;
+  outline: none;
 }
-.classSelectRow {
+
+.authForm input:focus {
+  border-color: #e59800;
+  box-shadow: 0 0 0 3px rgba(243, 168, 0, 0.16);
+}
+
+.authError {
+  margin: 0;
+  padding: 11px;
+  border-radius: 10px;
+  background: #fff0ef;
+  color: #c3342c;
+  font-size: 14px;
+  font-weight: 750;
+}
+
+/* 선생님 화면 */
+
+.teacherPage {
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: 50px;
+  background: #dedede;
+}
+
+.teacherHeader {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  min-height: 82px;
+  padding: 13px max(20px, calc((100vw - 960px) / 2));
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: space-between;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid #d7d7d7;
+  backdrop-filter: blur(12px);
 }
 
-.classSelectRow select {
-  width: 100px;
+.teacherHeader h1 {
+  margin: 2px 0 0;
+  font-size: clamp(20px, 4vw, 28px);
+  letter-spacing: -0.05em;
+}
+
+.teacherSchoolName {
+  margin: 0;
+  color: #8d6300;
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.teacherHeaderActions {
+  display: flex;
+  gap: 8px;
+}
+
+.headerSecondaryButton {
+  min-height: 40px;
+  padding: 0 15px;
+  border: 1px solid #d5d5d5;
+  border-radius: 10px;
+  background: #fff;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.teacherDashboard {
+  width: min(calc(100% - 28px), 930px);
+  margin: 18px auto 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.teacherCard {
+  min-width: 0;
+  padding: clamp(18px, 3vw, 27px);
+  border: 1px solid #d5d5d5;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.045);
+}
+
+.classCard {
+  grid-column: 1 / -1;
+}
+
+.messageComposerCard,
+.messageDeleteCard,
+.assignmentRegisterCard,
+.facilityControlCard,
+.csvCard {
+  grid-column: 1 / -1;
+}
+
+.cardTitleRow {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cardTitleRow > div {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cardTitleRow h2 {
+  margin: 0;
+  font-size: clamp(21px, 4vw, 33px);
+  letter-spacing: -0.055em;
+}
+
+.cardTitleRow > strong {
+  flex: 0 0 auto;
+  color: #9b6200;
+}
+
+.cardNumber {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #f3a800;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.largeSelect {
+  width: 100%;
+  height: 54px;
+  padding: 0 15px;
+  border: 1px solid #cecece;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 17px;
+  font-weight: 750;
 }
 
 .favoriteButton {
-  width: 32px;
-  height: 32px;
-  padding: 0;
-
-  border: none;
-  background: transparent;
-
-  font-size: 18px;
+  width: 46px;
+  height: 42px;
+  flex: 0 0 46px;
+  border: 0;
+  border-radius: 10px;
+  background: #fff1b8;
+  color: #df9300;
+  font-size: 24px;
   cursor: pointer;
+}
+
+.messageComposer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 130px;
+  min-height: 150px;
+  overflow: hidden;
+  border: 1px solid #d3d3d3;
+  border-radius: 8px;
+}
+
+.messageComposer textarea {
+  width: 100%;
+  min-height: 150px;
+  padding: 18px;
+  resize: vertical;
+  border: 0;
+  outline: 0;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.sendMessageButton {
+  border: 0;
+  background: #d57800;
+  color: #15100a;
+  font-size: 17px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.teacherMessageList {
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.teacherMessage {
+  min-height: 64px;
+  margin-bottom: 9px;
+  padding: 11px 12px 11px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border: 1px solid #eeeeee;
+  border-radius: 12px;
+  background: #fafafa;
+}
+
+.teacherMessage > div {
+  min-width: 0;
+}
+
+.teacherMessage b {
+  color: #9b6200;
+  font-size: 13px;
+}
+
+.teacherMessage p {
+  margin: 3px 0 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.roundDeleteButton {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  border: 0;
+  border-radius: 50%;
+  background: #ff565b;
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.teacherEmptyText {
+  margin: 0;
+  padding: 20px 0;
+  color: #777;
+  text-align: center;
+}
+
+.assignmentForm {
+  display: grid;
+  grid-template-columns:
+    minmax(100px, 0.7fr)
+    minmax(160px, 1.5fr)
+    minmax(145px, 0.8fr)
+    90px;
+  gap: 8px;
+}
+
+.assignmentForm input {
+  width: 100%;
+  min-width: 0;
+  height: 46px;
+  padding: 0 12px;
+  border: 1px solid #d2d2d2;
+  border-radius: 8px;
+  outline: none;
+}
+
+.assignmentForm input:focus {
+  border-color: #e59800;
+}
+
+.teacherPrimaryButton {
+  min-height: 46px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 8px;
+  background: #f3a800;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.assignmentManageList {
+  max-height: 200px;
+  margin-top: 14px;
+  overflow-y: auto;
+}
+
+.assignmentManageItem {
+  padding: 10px 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.assignmentManageItem > div {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.assignmentManageItem b {
+  overflow-wrap: anywhere;
+}
+
+.assignmentManageItem span {
+  color: #777;
+  font-size: 13px;
+}
+
+.assignmentManageItem button {
+  min-height: 34px;
+  padding: 0 12px;
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 8px;
+  background: #ffe3e3;
+  color: #b62121;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.facilityControls {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 9px;
+}
+
+.facilityToggle {
+  min-height: 105px;
+  padding: 13px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid #d7d7d7;
+  border-radius: 12px;
+  background: #ececec;
+  cursor: pointer;
+}
+
+.facilityToggle span {
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.facilityToggle b {
+  color: #777;
+  font-size: 12px;
+}
+
+.facilityToggle i {
+  width: 48px;
+  height: 26px;
+  position: relative;
+  display: block;
+  border-radius: 30px;
+  background: #bdbdbd;
+  transition: background 0.2s ease;
+}
+
+.facilityToggle i::after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.18);
+  transition: transform 0.2s ease;
+}
+
+.facilityToggle.active {
+  border-color: #e7a000;
+  background: #fff4c8;
+}
+
+.facilityToggle.active b {
+  color: #a76700;
+}
+
+.facilityToggle.active i {
+  background: #f3a800;
+}
+
+.facilityToggle.active i::after {
+  transform: translateX(22px);
+}
+
+.statusSaveButton {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.csvHelp {
+  margin: 0 0 14px;
+  color: #606060;
+  line-height: 1.55;
+}
+
+.csvFileInput {
+  width: 100%;
+  padding: 12px;
+  border: 2px dashed #c8c8c8;
+  border-radius: 10px;
+  background: #fafafa;
+}
+
+.csvFileInput::file-selector-button {
+  min-height: 38px;
+  margin-right: 12px;
+  padding: 0 15px;
+  border: 0;
+  border-radius: 8px;
+  background: #f3a800;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.csvResult {
+  margin: 12px 0 0;
+  padding: 11px;
+  border-radius: 9px;
+  background: #fff4c8;
+  font-weight: 750;
+}
+
+.teacherToast {
+  position: fixed;
+  left: 50%;
+  bottom: 25px;
+  z-index: 2000;
+  width: max-content;
+  max-width: calc(100vw - 30px);
+  padding: 13px 20px;
+  transform: translateX(-50%);
+  border-radius: 12px;
+  background: #202020;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.23);
+  font-weight: 750;
+  text-align: center;
+}
+
+/* 태블릿 */
+
+@media (max-width: 850px) {
+  .boardArea {
+    grid-template-columns: minmax(0, 1fr) 235px;
+    grid-template-rows:
+      minmax(330px, auto)
+      minmax(150px, auto)
+      minmax(150px, auto);
+  }
+
+  .messageBox {
+    grid-column: 1;
+  }
+
+  .sideMenu {
+    grid-column: 2;
+    grid-row: 1 / 3;
+  }
+
+  .assignmentBox {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .mealBox {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+
+  .assignmentForm {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .assignmentForm .teacherPrimaryButton {
+    grid-column: 2;
+  }
+}
+
+/* 스마트폰 */
+
+@media (max-width: 600px) {
+  .header {
+    min-height: 70px;
+    padding: 9px 12px;
+    gap: 10px;
+  }
+
+  .logoBox {
+    width: 49px;
+    height: 49px;
+    flex-basis: 49px;
+    border-radius: 12px;
+  }
+
+  .schoolKorean {
+    font-size: 21px;
+  }
+
+  .schoolEnglishName {
+    max-width: 160px;
+    font-size: 9px;
+  }
+
+  .settingButton {
+    width: 65px;
+    height: 38px;
+  }
+
+  .boardArea {
+    min-height: calc(100vh - 70px);
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+  }
+
+  .messageBox,
+  .sideMenu,
+  .assignmentBox,
+  .mealBox {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .messageBox {
+    min-height: 300px;
+  }
+
+  .sideMenu {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 190px;
+  }
+
+  .statusBox,
+  .facilityBox {
+    min-height: 190px;
+  }
+
+  .libraryPart,
+  .gymPart {
+    padding: 13px;
+  }
+
+  .teacherHeader {
+    position: static;
+    padding: 11px 14px;
+    align-items: flex-start;
+  }
+
+  .teacherHeader h1 {
+    font-size: 20px;
+  }
+
+  .teacherHeaderActions {
+    flex-direction: column;
+  }
+
+  .headerSecondaryButton {
+    min-height: 34px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  .teacherDashboard {
+    width: calc(100% - 14px);
+    margin-top: 7px;
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .teacherCard {
+    padding: 18px;
+    border-radius: 4px;
+  }
+
+  .cardTitleRow h2 {
+    font-size: 27px;
+  }
+
+  .messageComposer {
+    grid-template-columns: minmax(0, 1fr) 92px;
+  }
+
+  .sendMessageButton {
+    font-size: 14px;
+  }
+
+  .assignmentForm {
+    grid-template-columns: 1fr;
+  }
+
+  .assignmentForm .teacherPrimaryButton {
+    grid-column: auto;
+  }
+
+  .facilityControls {
+    grid-template-columns: 1fr;
+  }
+
+  .facilityToggle {
+    min-height: 76px;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .modalBox {
+    padding: 23px 18px;
+  }
+}
+
+/* 아주 작은 스마트폰 */
+
+@media (max-width: 380px) {
+  .schoolEnglishName {
+    display: none;
+  }
+
+  .sideMenu {
+    grid-template-columns: 1fr;
+    grid-template-rows: 180px 200px;
+  }
+
+  .cardTitleRow h2 {
+    font-size: 23px;
+  }
+
+  .messageComposer {
+    grid-template-columns: 1fr;
+  }
+
+  .sendMessageButton {
+    min-height: 56px;
+  }
+}
+.gradeSelect {
+  margin-bottom: 10px;
 }
